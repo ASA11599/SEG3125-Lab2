@@ -5,60 +5,70 @@ var products = [
         name: "broccoli",
         vegetarian: true,
         glutenFree: true,
+        organic: true,
         price: 1.99
     },
     {
         name: "bread",
         vegetarian: true,
         glutenFree: false,
+        organic: false,
         price: 2.35
     },
     {
         name: "salmon",
         vegetarian: false,
         glutenFree: true,
+        organic: false,
         price: 10.00
     },
     {
         name: "chicken",
         vegetarian: false,
         glutenFree: true,
+        organic: true,
         price: 8.50
     },
     {
         name: "olives",
         vegetarian: true,
         glutenFree: true,
+        organic: true,
         price: 1.99
     },
     {
         name: "ice cream",
         vegetarian: true,
         glutenFree: false,
+        organic: false,
         price: 3.99
     },
     {
         name: "eggs",
         vegetarian: true,
         glutenFree: true,
+        organic: true,
         price: 2.99
     },
     {
         name: "bananas",
         vegetarian: true,
         glutenFree: true,
+        organic: false,
         price: 0.99
     },
     {
         name: "tomatoes",
         vegetarian: true,
         glutenFree: true,
+        organic: true,
         price: 1.50
     },
     {
         name: "oranges",
         vegetarian: true,
         glutenFree: true,
+        organic: false,
         price: 0.99
     }
 ];
@@ -66,20 +76,19 @@ var products = [
 
 // given restrictions provided, make a reduced list of products
 // prices should be included in this list, as well as a sort based on price
-function restrictListProducts(prods, restriction) {
-    let product_names = [];
-    for (let i=0; i<prods.length; i+=1) {
-        if ((restriction == "Vegetarian") && (prods[i].vegetarian == true)){
-            product_names.push(prods[i].name);
-        }
-        else if ((restriction == "GlutenFree") && (prods[i].glutenFree == true)){
-            product_names.push(prods[i].name);
-        }
-        else if (restriction == "None"){
-            product_names.push(prods[i].name);
-        }
-    }
-    return product_names;
+function restrictListProducts(prods, restrictions) {
+    return prods.filter((product) => {
+        return restrictions.every((restriction) => {
+            return product[restriction];
+        });
+    }).map((product) => {
+        return {
+            "name": product["name"],
+            "price": product["price"]
+        };
+    }).sort((a, b) => {
+        return a["price"] - b["price"];
+    });
 }
 
 

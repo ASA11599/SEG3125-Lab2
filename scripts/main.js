@@ -1,3 +1,5 @@
+const selectedCategories = [];
+
 // This function is called when any of the tab is clicked
 // It is adapted from https://www.w3schools.com/howto/howto_js_tabs.asp
 function openInfo(evt, tabName) {
@@ -23,23 +25,24 @@ function openInfo(evt, tabName) {
 
 // generate a checkbox list from a list of products
 // it makes each product name as the label for the checkbos
-function populateListProductChoices(slct1, slct2) {
-    var s1 = document.getElementById(slct1);
+function populateListProductChoices(categories, slct2) {
+
     var s2 = document.getElementById(slct2);
-    
+
     // s2 represents the <div> in the Products tab, which shows the product list, so we first set it empty
     s2.innerHTML = "";
-        
+
     // obtain a reduced list of products based on restrictions
-    var optionArray = restrictListProducts(products, s1.value);
+    var optionArray = restrictListProducts(products, categories);
 
     // for each item in the array, create a checkbox element, each containing information such as:
     // <input type="checkbox" name="product" value="Bread">
     // <label for="Bread">Bread/label><br>
-        
+
     for (i = 0; i < optionArray.length; i++) {
-            
-        var productName = optionArray[i];
+
+        var productName = optionArray[i]["name"];
+        const productPrice = optionArray[i]["price"];
         // create the checkbox and add in HTML DOM
         var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -51,10 +54,12 @@ function populateListProductChoices(slct1, slct2) {
         var label = document.createElement('label')
         label.htmlFor = productName;
         label.appendChild(document.createTextNode(productName));
+        label.appendChild(document.createTextNode(" $"));
+        label.appendChild(document.createTextNode(productPrice));
         s2.appendChild(label);
         
         // create a breakline node and add in HTML DOM
-        s2.appendChild(document.createElement("br"));    
+        s2.appendChild(document.createElement("br"));
     }
 }
 
@@ -87,3 +92,21 @@ function selectedItems(){
     c.appendChild(document.createTextNode("Total Price is " + getTotalPrice(chosenProducts)));
 
 }
+
+
+function onChooseCategory(event) {
+    const category = event["target"]["value"];
+    const checked = event["target"]["checked"];
+    if (checked) {
+        selectedCategories.push(category);
+    } else {
+        selectedCategories.splice(selectedCategories.indexOf(category), 1);
+    }
+    populateListProductChoices(selectedCategories, "displayProduct");
+}
+
+
+for (i = 1; i < document.getElementsByClassName("tabcontent").length; i++) {
+    document.getElementsByClassName("tabcontent")[i].style.display = "none";
+}
+populateListProductChoices(selectedCategories, "displayProduct");

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
   <title>GroceriesJS</title>
-  <!-- This style sheet is taken from  https://www.w3schools.com/howto/howto_js_tabs.asp -->
+  <!-- This style sheet is taken from https://www.w3schools.com/howto/howto_js_tabs.asp -->
   <link href="styles/style.css" rel="stylesheet" type="text/css">
 </head>
 
@@ -19,13 +20,13 @@
 <div id="Client" class="tabcontent">
   <h3>Client Information</h3>
   <p>Tell us a bit about you.</p>
-    Choose a Category:
-    <select id="dietSelect" name="dietSelect" onchange="populateListProductChoices(this.id, 'displayProduct')">
-    <option value=""></option>
-    <option value="Vegetarian">Vegetarian</option>
-    <option value="GlutenFree">Gluten Free</option>
-    <option value="None">None</option>
-    </select>
+    Choose Categories:<br>
+    <input type="checkbox" name="category" value="vegetarian" onchange="onChooseCategory(event)">
+    <label for="vegetarian">Vegetarian</label><br>
+    <input type="checkbox" name="category" value="glutenFree" onchange="onChooseCategory(event)">
+    <label for="glutenFree">Gluten Free</label><br>
+    <input type="checkbox" name="category" value="organic" onchange="onChooseCategory(event)">
+    <label for="organic">Organic Only</label><br>
 </div>
 
 <div id="Products" class="tabcontent">
@@ -48,4 +49,7 @@
 <script src="scripts/main.js"></script>
 
 </body>
+<footer>
+  <p>Website designed by <i>Amayas Said Amer</i></p>
+</footer>
 </html>
